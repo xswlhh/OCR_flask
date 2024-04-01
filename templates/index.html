@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>图片文字识别</title>
+
+		<!-- Bootstrap Core CSS -->
+		<link href="../static/css/bootstrap.min.css" rel="stylesheet">
+
+		<!-- Main stylesheet -->
+		<link href="../static/css/hallooou.css" rel="stylesheet">
+
+		<!-- Plugin stylesheets -->
+		<link href="../static/css/plugins/owl.carousel.css" rel="stylesheet">
+		<link href="../static/css/plugins/owl.theme.css" rel="stylesheet">
+		<link href="../static/css/plugins/owl.transitions.css" rel="stylesheet">
+		<link href="../static/css/plugins/animate.css" rel="stylesheet">
+		<link href="../static/css/plugins/magnific-popup.css" rel="stylesheet">
+		<link href="../static/css/plugins/jquery.mb.YTPlayer.min.css" rel="stylesheet">
+
+		<!-- Custom Fonts -->
+		<link href="../static/css/font-awesome.min.css" rel="stylesheet">
+        <!-- jQuery -->
+		<script src="../static/js/jquery.js"></script>
+        <script src="../static/js/plugins/jquery.easing.min.js"></script>
+
+		<!-- Bootstrap Core JavaScript -->
+		<script src="../static/js/bootstrap.min.js"></script>
+
+		<!-- Plugin JavaScript -->
+		<script src="../static/js/plugins/wow.min.js"></script>
+	</head>
+
+	<body id="home">
+		<!-- Navigation -->
+		<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header pull-left">
+					<a class="navbar-brand page-scroll" href="#home" style="display: flex; align-items: center;">
+						<!-- replace with your brand logo/text -->
+						<span class="brand-logo"><img style="width: 42px;" src="../static/images/logo.svg"
+								class="img-responsive"></span>
+                        <span style="font-size: 18px">欢迎您：{{ username }}</span>
+					</a>
+				</div>
+				<div class="main-nav pull-right">
+					<div class="button_container toggle">
+						<span class="top"></span>
+						<span class="middle"></span>
+						<span class="bottom"></span>
+					</div>
+				</div>
+				<div class="overlay" id="overlay">
+					<nav class="overlay-menu">
+						<ul>
+							<li><a href="#team">Image Of Text</a></li>
+							<li><a href="#services">What we do</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div><!-- /.container -->
+		</nav>
+
+
+		<!-- Intro Header -->
+		<!-- Full Page Image Background Carousel Header -->
+		<header id="intro-carousel" class="carousel slide">
+
+			<!-- Wrapper for slides -->
+			<div class="carousel-inner">
+                <div style="position: fixed; right: 10px; top:75px; z-index: 9999">
+                    <form action="{{ url_for('logout') }}" method="get">
+                        <div class="input-group-lg" style="display: flex; justify-content: center; align-items: center;">
+                            <input style="margin-left: 10px; padding: 5px; font-size: 14px;" class="btn btn-default" type="submit" value="登出">
+                        </div>
+                    </form>
+                </div>
+				<div class="item active">
+					<!-- Set the first background image using inline CSS below. -->
+					<div class="fill" style="background-image:url('../static/images/cover-three.jpg');"></div>
+					<div class="carousel-caption">
+						<h1 class="wow animated slideInDown"><span class="highlight">深度学习识别OCR文字</span></h1>
+						<p class="intro-text wow animated slideInUp">主要涉及相关框架：flask框架；<br>主要涉及相关python包：easyocr、paddleocr、selenium;</p>
+					</div>
+					<div class="overlay-detail"></div>
+				</div><!-- /.item -->
+			</div>
+			<div class="mouse"></div>
+		</header>
+
+
+		<!-- team Section -->
+		<section id="team" class="team content-section">
+			<div class="container">
+				<div class="row text-center">
+					<div class="col-md-12">
+						<h2>Image Of Text</h2>
+{#						<h3 class="caption gray">请输入您想搜索的图片信息</h3>#}
+
+                        <form action="{{ url_for('add') }}" method="post" enctype="multipart/form-data">
+                            <input class="file" type="file" name="file" style="display: none;"/><br />
+                            <input type="button" class="btn btn-default" value="select img" onclick="clickFile2()"/>
+                            <input type="submit" style="margin-left: 10px;" value="add" class="btn btn-default"  />
+                        </form>
+
+						<form action="{{ url_for('result') }}"  method="post">
+							<div class="form-group input-group-lg" style="display: flex; justify-content: center; align-items: center;">
+								<input value="{{ result }}" id="inputImageTxt" type="text" name="image_txt" class="form-control" placeholder="Enter image txt">
+                                <input type="submit"  style="margin-left: 10px;" class="btn btn-default" value="search" >
+							</div>
+						</form>
+
+					</div><!-- /.col-md-12 -->
+
+					<div class="container">
+						<div class="row">
+                            {% for list in pagelists["list"] %}
+							<div class="col-md-3">
+								<div style="background: #fff; min-height: 212px; display: flex; align-items: center; justify-content: center;" class="team-member wow fadeIn" data-wow-offset="10">
+									<figure>
+										<img style="max-height: 212px; min-width: 100px;" src="../{{ list[1] }}" alt="" class="img-responsive">
+										<figcaption>
+											<p style="font-size: 12px; min-width: 50px;">{{ list[2] }}</p>
+										</figcaption>
+									</figure>
+								</div><!-- /.team-member -->
+							</div><!-- /.col-md-3 -->
+                            {% endfor %}
+						</div><!-- /.row -->
+
+                        <div class="pager">
+                            <form action="{{ url_for('page') }}" method="post" style="padding-top: 40px">
+                                <label class="">
+                                    <span class="social-icon">
+                                        第 &nbsp <input value="{{ page }}" style="width: 60px; color: #606060; font-size: 18px; text-align: center;" class="input-sm" type="text" name="page"> &nbsp页
+                                        / 共  {{ pagelists["total"] }} 页
+                                    </span>
+                                </label>
+                                <input value="{{ result }}" type="hidden" name="page_image_txt">
+                                <input class="searchPage btn-danger thumbnail" type="submit" value="跳转">
+						        <span style="float: right; margin-right: 15px; line-height: 37px;">每页 {{ pagelists["pageSize"] }} 条</span>
+                            </form>
+						</div>
+					</div><!-- /.container -->
+
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</section><!-- /.our-team -->
+
+
+		<!-- team Section -->
+{#		<section id="services" class="services content-section">#}
+{#			<div class="container">#}
+{#				<div class="row text-center">#}
+{#					<div class="col-md-12">#}
+{#						<h2>What we do</h2>#}
+{#						<h3 class="caption gray">Each of our team is responsible for the module</h3>#}
+{#					</div><!-- /.col-md-12 -->#}
+{##}
+{#					<div class="container">#}
+{#						<div class="row text-center">#}
+{#							<div class="col-md-4">#}
+{#								<div class="row services-item text-center wow flipInX" data-wow-offset="10">#}
+{#									<i class="fa fa-cogs fa-3x"></i>#}
+{#									<h4>Development</h4>#}
+{#									<p><b style="color: #000;">老王</b>：负责python后端语言开发，如：爬虫百度图片、前后端数据交互等。</p>#}
+{#								</div><!-- /.row -->#}
+{#							</div><!-- /.col-md-4 -->#}
+{##}
+{#							<div class="col-md-4">#}
+{#								<div class="row services-item text-center wow flipInX" data-wow-offset="10">#}
+{#									<i class="fa fa-paint-brush fa-3x"></i>#}
+{#									<h4>UI/UX/WEB</h4>#}
+{#									<p><b style="color: #000;">小红</b>：负责前端网页设计，采用了bootstrap前端框架，兼容手机和电脑端</p>#}
+{#								</div><!-- /.row -->#}
+{#							</div><!-- /.col-md-4 -->#}
+{##}
+{#							<div class="col-md-4">#}
+{#								<div class="row services-item text-center wow flipInX" data-wow-offset="20">#}
+{#									<i class="fa fa-database fa-3x"></i>#}
+{#									<h4>Architecture Design</h4>#}
+{#									<p><b style="color: #000;">小明</b>：数据库数据结构设计,使用mycharm自带的sqlite数据库</p>#}
+{#								</div><!-- /.row -->#}
+{#							</div><!-- /.col-md-4 -->#}
+{#						</div><!-- /.row -->#}
+{#					</div><!-- /.container -->#}
+{##}
+{#				</div><!-- /.row -->#}
+{#			</div><!-- /.container -->#}
+{#		</section><!-- /.section -->#}
+
+
+		<footer>
+			<div class="copynote">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12 text-center">Copyright &copy; 2024.Company name All rights reserved.</div>
+						<!-- /.col-md-12 -->
+					</div><!-- /.row -->
+				</div><!-- /.container -->
+			</div><!-- /.copynote -->
+
+			<div class="nav pull-right scroll-top">
+				<a href="#home" title="Scroll to top"><i class="fa fa-angle-up"></i></a>
+			</div>
+		</footer><!-- /.footer -->
+
+		<!-- <script src="assets/js/plugins/jquery.validate.min.js"></script> -->
+
+		<!-- Custom JavaScript -->
+		<script src="../static/js/hallooou.js"></script>
+		
+		<!-- my javascript -->
+		<script type="text/javascript">
+            $(function () {
+                //跳转指定位置
+				var result = {{ result | tojson}},
+                    page = {{ page }}
+
+                    console.log(page)
+                    console.log(result)
+                if (page>1 || result.length) {
+                    onTopClick('team')
+                }
+
+                //回车事件
+                $("#inputImageTxt").bind("keydown",function(e){
+                    // 兼容FF和IE和Opera
+                    var theEvent = e || window.event;
+                    var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+                    //console.log(code);
+                    if (code == 13) {
+                        //回车执行查询
+                        $("#search").click()
+                        return false;
+                    }
+                });
+
+                // 搜索事件
+                $("#search").on('click',function(){
+                    console.log("232")
+                })
+            })
+               function clickFile1(){
+                var form = document.getElementById('formId1');
+
+                    form.setAttribute("action","{{ url_for('result') }}");
+                    form.submit();
+                }
+                // 上传图片
+               function clickFile2(){
+	                var input = document.querySelector('.file');
+	                input.click();
+                }
+
+		</script>
+	</body>
+    <style type="text/css">
+        .searchPage {display: inline-block; color: #666; margin-left: 10px; padding: 6px;}
+    </style>
+</html>

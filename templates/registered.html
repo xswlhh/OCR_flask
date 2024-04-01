@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="../static/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+		<link href="../static/css/font-awesome.min.css" type="text/javascript" rel="stylesheet">
+		<link href="../static/css/bootsnav.css" type="text/css" rel="stylesheet">
+		<link href="../static/css/normalize.css" type="text/css" rel="stylesheet">
+		<link href="../static/css/login.css" rel="stylesheet" type="text/css">
+		<!--[if IE]><script src="js/html5.js"></script><![endif]-->
+		<title>注册</title>
+	</head>
+	<body class="logobg_style" style="">
+		<div id="large-header" class="large-header login-page" style="height: 921px;">
+			<canvas id="demo-canvas" width="1245" height="921"></canvas>
+			<div class="Retrieve_style">
+				<div class="Retrieve-content step-body" id="myStep">
+					<h1 class="title_name">用户注册</h1>
+					<div class="step-header" style="display: block;">
+						<div class="step-bar">
+							<div class="step-bar-active" style="width: 0;"></div>
+						</div>
+						<ul id="line">
+							<li style="width: 33.3333%;">
+								<p>输入账号</p><span>1</span>
+							</li>
+							<li style="width: 33.3333%;">
+								<p>确认密码</p><span>2</span>
+							</li>
+							<li style="width: 33.3333%;">
+								<p>成功</p><span>3</span>
+							</li>
+						</ul>
+					</div>
+					<div class="step-content">
+{#						<div class="step-list login_padding" style="display: block;">#}
+{#							<form role="form" id="form_login" class="">#}
+{#								<div class="form-group clearfix">#}
+{#									<div class="input-group col-lg-8 col-md-8 col-xs-8">#}
+{#										<div class="input-group-addon"><i class="icon_phone"></i></div>#}
+{#										<input type="text" class="form-control text_phone" name="phone" id="phone"#}
+{#											placeholder="你的手机号" autocomplete="off">#}
+{#									</div>#}
+{#									<div class="col-lg-4 col-md-4 col-xs-4 fl"><input type="button" id="btn"#}
+{#											class="btn_mfyzm" value="获取验证码" onclick="Sendpwd(this)"></div>#}
+{#								</div>#}
+{#								<div class="form-group clearfix">#}
+{#									<div class="input-group">#}
+{#										<div class="input-group-addon"><i class="icon_yanzhen"></i></div>#}
+{#										<input type="text" class="form-control" name="Verification" id="Verification"#}
+{#											placeholder="短信验证码" autocomplete="off">#}
+{#									</div>#}
+{#								</div>#}
+{#								<div class="tishi"></div>#}
+{#							</form>#}
+{#							<div class="form-group">#}
+{#								<button class="btn btn-danger btn-block btn-login" id="applyBtn">下一步</button>#}
+{#							</div>#}
+{#						</div>#}
+						<div class="step-list" style="display: block;">
+							<form method="post" id="regForm" class="login_padding">
+                                <div class="form-group clearfix">
+                                    <div class="input-group col-lg-8 col-md-8 col-xs-8">
+										<div class="input-group-addon"><i class="icon_user"></i></div>
+										<input type="text" class="form-control text_phone" name="username" id="username"
+											placeholder="输入注册账号" autocomplete="off">
+									</div>
+                                </div>
+								<div class="form-group clearfix">
+									<div class="input-group">
+										<div class="input-group-addon">
+											<i class="icon_password"></i>
+										</div>
+										<input type="password" class="form-control" name="password" id="password"
+											placeholder="重置密码" autocomplete="off">
+									</div>
+								</div>
+								<div class="form-group clearfix">
+									<div class="input-group">
+										<div class="input-group-addon">
+											<i class="icon_password"></i>
+										</div>
+										<input type="password" class="form-control" name="confirmpwd" id="confirmpwd"
+											placeholder="再次密码" autocomplete="off">
+									</div>
+								</div>
+								<div class="tishis"></div>
+								<div class="form-group">
+									<a href="javascript:void(0);"
+										class="btn btn-danger btn-block btn-login" id="submitBtn">下一步</a>
+								</div>
+							</form>
+						</div>
+						<div class="step-list">
+							<div class="ok_style center">
+								<h2><img src="../static/images/ok.png"></h2>
+								<h5 class="color2 mtb20">你已成功注册</h5>
+								<a href="{{ url_for('login') }}" class="btn btn-danger">登录页</a>
+								<a href="{{ url_for('registered') }}" class="btn btn-primary">从新注册</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+        <!-- jQuery -->
+		<script src="../static/js/jquery.js"></script>
+		<script src="../static/js/TweenLite.min.js"></script>
+		<script src="../static/js/EasePack.min.js"></script>
+		<script src="../static/js/rAF.js"></script>
+		<script src="../static/js/demo-1.js"></script>
+
+		<script type="text/javascript">
+            $('#username').on('blur',function (){
+                if($(this).val().length) {
+                    $('.step-bar-active').css("width", "16.6667%")
+                    $('#line li').eq(0).addClass('step-active')
+                } else {
+                    $('.step-bar-active').css("width", "0")
+                    $('#line li').eq(0).removeClass('step-active')
+                    $('#line li').eq(1).removeClass('step-active')
+                    $('#line li').eq(2).removeClass('step-active')
+                }
+            })
+
+            $('#confirmpwd').on('blur',function (){
+                var value = $(this).val()
+
+                if($('#password').val().length > 0 && $('#password').val() === value){
+                    if($(this).val().length) {
+                        $('.step-bar-active').css("width", "50.5%")
+                        $('#line li').eq(1).addClass('step-active')
+                    }
+                } else {
+                    $('.step-bar-active').css("width", "16.6667%")
+                    $('#line li').eq(1).removeClass('step-active')
+                    $('#line li').eq(2).removeClass('step-active')
+                }
+            })
+
+
+            $('#submitBtn').on('click',function (){
+                var password = $('#password').val(),
+                    confirmpwd = $('#confirmpwd').val(),
+                    username = $('#username').val()
+
+                if(password.length > 0 && password === confirmpwd && username.length>0){
+                    $.ajax({
+                        url: '/registered_action', // 请求地址
+                        type: 'POST', // 说明请求的类型
+                        data : { username : username, password: password },
+                        success: function(data){
+                            // each函数遍历数据
+                            // i是索引 item是正在遍历的数据
+                            console.log(data)
+                            if (data.code !== 400) {
+                                $('.step-list').hide()
+                                $('.step-list').eq(1).show()
+                                $('.step-bar-active').css("width", "100%")
+                                $('#line li').eq(2).addClass('step-active')
+                            } else {
+                                alert(data.data)
+                            }
+                        },
+                        // 报错处理
+                        error: function(){
+                            // 写入日志
+                            alert('注册用户失败！')
+                        }
+                    });
+
+                }
+            });
+		</script>
+	</body>
+</html>
