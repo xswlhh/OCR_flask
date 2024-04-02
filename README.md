@@ -1,11 +1,17 @@
 基于falsk框架 + paddleocr的简单OCR文字识别web系统
 
 一、	基础环境
+
 Python 3.8
+
 Flask 3.0+
+
 Jinja2 3.1+
+
 Paddleocr 2.7
+
 Paddlepaddle 2.6
+
 Selenium 无版本要求，最新即可
 
 二、	使用说明
