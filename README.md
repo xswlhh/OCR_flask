@@ -13,7 +13,6 @@ Selenium 无版本要求，最新即可
 如果有关于浏览器驱动的报错，说明浏览器驱动(edge)与电脑上的浏览器不兼容，可自行下载兼容版本到spider文件夹下
 2.	再运行getImageTxt.py ,此操作是读取已下载好图片内的文字
 3.	直接运行app.py 启动项目即可
- ![Uploading image.png…]()
 
 
 
